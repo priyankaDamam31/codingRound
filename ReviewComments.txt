@@ -1,0 +1,7 @@
+1. Moved test classes to test folder, removed the default package structure
+2. Added Utils Package, which contains below classes: 
+	i) TestHandler class - Base class for all the test classes. It contains driver initialization , setDriverPath() and afterTest() method.
+	ii)ObjectRepository -  It contains all the constant strings and element locators
+	iii)ElementHandler - Common element function added to this class for EG. isElementPresent(), waitFor() etc
+3. Added pagefactory package, which contains below class:
+	i) HotelBooking - It holds page factory elements and action methods for HotelBookingTest class
