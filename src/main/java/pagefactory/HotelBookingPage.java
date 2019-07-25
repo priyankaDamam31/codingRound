@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 import utils.TestHandler;
@@ -33,7 +34,7 @@ public class HotelBookingPage extends TestHandler {
 
 	// Constructor
 	public HotelBookingPage(WebDriver driver) {
-		this.driver = driver;
+		PageFactory.initElements(getDriver(), this);
 	}
 
 	// Action methods
