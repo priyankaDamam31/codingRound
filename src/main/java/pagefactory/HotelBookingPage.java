@@ -1,12 +1,17 @@
 package pagefactory;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
+import utils.TestHandler;
+
 //page factory class for HotelBooking screen
-public class HotelBooking {
+public class HotelBookingPage extends TestHandler {
 
 	WebDriver driver;
 
@@ -16,15 +21,18 @@ public class HotelBooking {
 
 	@FindBy(id = "Tags")
 	private WebElement localityTextBox;
+	
+	@FindBy(id = "ui-id-1")
+	private WebElement locationOptionsID;
 
 	@FindBy(id = "SearchHotelsButton")
-	private WebElement searchButton;
+	private WebElement searchBtn;
 
 	@FindBy(id = "travellersOnhome")
 	private WebElement travellerSelection;
 
 	// Constructor
-	public HotelBooking(WebDriver driver) {
+	public HotelBookingPage(WebDriver driver) {
 		this.driver = driver;
 	}
 
@@ -33,8 +41,12 @@ public class HotelBooking {
 		hotelLink.click();
 	}
 
-	public void sendKeysToLocality(String value) {
+	public void selectLocality(String value) {
 		localityTextBox.sendKeys(value);
+		// wait for the auto complete options to appear for the origin
+		elementHandler.waitForListOfElements(By.xpath("//*[@id='ui-id-1']//a"));
+		List<WebElement> originOptions = locationOptionsID.findElements(By.tagName("a"));
+		originOptions.get(0).click();
 	}
 
 	public void selectTravellers(String value) {
@@ -43,7 +55,7 @@ public class HotelBooking {
 	}
 
 	public void clickSearch() {
-		searchButton.click();
+		searchBtn.click();
 	}
 
 }
