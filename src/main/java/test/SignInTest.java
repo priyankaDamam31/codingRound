@@ -1,38 +1,33 @@
 package test;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import utils.ObjectRepositroy;
-import utils.TestHandler;
+import pagefactory.SignInPage;
+import utils.ConstantRepositroy;
 
-public class SignInTest extends TestHandler {
+public class SignInTest {
 
 	WebDriver driver;
+	SignInPage page = new SignInPage(this.driver);
 
 	@Test
 	public void shouldThrowAnErrorIfSignInDetailsAreMissing() {
 
-		// get the driver object and Navigate to URL
-		driver = getDriver();
-		driver.get(ObjectRepositroy.URL);
-		elementHandler.waitFor(2000);
-
 		// Navigate to SignIn frame
-		driver.findElement(By.linkText(ObjectRepositroy.YOUR_TRIPS_LNK)).click();
-		driver.findElement(By.id(ObjectRepositroy.SIGNIN)).click();
-		WebElement frame1 = driver.findElement(By.id(ObjectRepositroy.SIGN_IN_FRAME));
-		elementHandler.waitFor(1000);
-		driver.switchTo().frame(frame1);
+		page.clickOnYourTrips();
+		page.clickOnSignInBtn();
 
-		// click on SignIn button and get the errors for not entering username and
-		// password
-		driver.findElement(By.id(ObjectRepositroy.SIGN_IN_BTN)).click();
-		String errors1 = driver.findElement(By.id(ObjectRepositroy.ERRORS_WEB_ELEMENT)).getText();
-		Assert.assertTrue(errors1.contains(ObjectRepositroy.ERRORS_TXT));
+		// check if sign in frame exists, if exists, navigate to sign in frame
+		Assert.assertTrue(page.checkSignInFrameExists(), "SignIn Frame does not exist");
+		page.navigateTosignInFrame();
+
+		// click on SignIn btn and get errors for not entering username and password
+		page.clickOnsignInFrameBtn();
+		Assert.assertTrue(page.checkErrorExists(), "Error is not thrown when username and password are not given");
+		Assert.assertTrue(page.getErrorText().contains(ConstantRepositroy.ERRORS_TXT));
+		page.logoutApplication();
 	}
 
 }
