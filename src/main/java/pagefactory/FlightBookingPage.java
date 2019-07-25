@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import utils.TestHandler;
 
@@ -50,8 +51,8 @@ public class FlightBookingPage extends TestHandler {
 	
 	// Constructor
 	public FlightBookingPage(WebDriver driver) {
-			this.driver = driver;
-		}
+		PageFactory.initElements(getDriver(), this);
+	}
 
 	// Action methods
 	public void selectTravelOptions(String travelType) {
