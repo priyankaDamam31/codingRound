@@ -17,7 +17,7 @@ public class HotelBookingTest {
 		// Navigate to Hotels tab and search for hotels
 		page.clickHotelsLink();
 		page.selectLocality(ConstantRepositroy.LOCATION);
-		page.selectTravellers("1 room, 2 adults");
+		page.selectTravellers(ConstantRepositroy.TRAVELLER_INFO);
 
 		// Click on search button
 		page.clickSearch();
