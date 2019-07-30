@@ -1,19 +1,18 @@
 package test;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import pagefactory.SignInPage;
 import utils.ConstantRepositroy;
+import utils.TestHandler;
 
-public class SignInTest {
-
-	WebDriver driver;
-	SignInPage page = new SignInPage(this.driver);
+public class SignInTest extends TestHandler {
 
 	@Test
 	public void shouldThrowAnErrorIfSignInDetailsAreMissing() {
+
+		SignInPage page = new SignInPage(getDriver());
 
 		// Navigate to SignIn frame
 		page.clickOnYourTrips();
@@ -27,7 +26,6 @@ public class SignInTest {
 		page.clickOnsignInFrameBtn();
 		Assert.assertTrue(page.checkErrorExists(), "Error is not thrown when username and password are not given");
 		Assert.assertTrue(page.getErrorText().contains(ConstantRepositroy.ERRORS_TXT));
-		page.logoutApplication();
 	}
 
 }

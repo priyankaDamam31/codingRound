@@ -1,20 +1,19 @@
 package test;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import pagefactory.FlightBookingPage;
 import utils.ConstantRepositroy;
+import utils.TestHandler;
 
-public class FlightBookingTest {
+public class FlightBookingTest extends TestHandler {
 
-	WebDriver driver;
-	FlightBookingPage page = new FlightBookingPage(driver);
-	
 	@Test
 	public void testThatResultsAppearForAOneWayJourney() {
 
+		FlightBookingPage page = new FlightBookingPage(getDriver());
+		
 		// Select one way, from and to flight locations
 		page.selectTravelOptions(ConstantRepositroy.TRIP_TYPE);
 		page.selectFromLocation(ConstantRepositroy.FROM_LOCATION);
@@ -24,7 +23,6 @@ public class FlightBookingTest {
 		
 		// verify that result appears for the provided journey search
 		Assert.assertTrue(page.isSummaryPresent());
-		page.logoutApplication();
 	}
 
 }
