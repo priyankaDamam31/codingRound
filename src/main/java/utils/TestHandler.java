@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -7,14 +9,18 @@ import org.testng.annotations.AfterTest;
 
 import com.sun.javafx.PlatformUtil;
 
+
+/**
+ * 
+ * @author qaadmin
+ *
+ */
 public class TestHandler {
 
 	/**
 	 * Driver
 	 */
 	private WebDriver driver;
-
-	final public ElementHandler elementHandler;
 
 	/**
 	 * Default Constructor
@@ -25,8 +31,8 @@ public class TestHandler {
 		options.addArguments("start-maximized");
 		setDriverPath();
 		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		elementHandler = new ElementHandler(driver);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.get(ConstantRepositroy.URL);
 	}
 
 	// method to access driver instance
