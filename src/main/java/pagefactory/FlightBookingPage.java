@@ -8,12 +8,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import utils.TestHandler;
+import utils.ElementHandler;
 
 //page factory class for FlightBooking screen
-public class FlightBookingPage extends TestHandler {
-
-	WebDriver driver;
+public class FlightBookingPage {
 
 	// WebElements
 	@FindBy(id = "OneWay")
@@ -34,24 +32,28 @@ public class FlightBookingPage extends TestHandler {
 	@FindBy(id = "ToTag")
 	private WebElement toLocationDrpdwn;
 
-	@FindBy(xpath = "//*[@id='ui-id-2']//a")
-	private WebElement toLocationOptions;
-
 	@FindBy(id = "ui-id-2")
 	private WebElement toLocationOptionsID;
 
-	@FindBy(xpath = "//*[@id='ui-datepicker-div']/div[1]/table/tbody/tr[4]/td[7]/a")
+	@FindBy(xpath = "//*[@id='ui-datepicker-div']/div[2]//a[text()='16']")
 	private WebElement departOnTxt;
 
 	@FindBy(id = "SearchBtn")
 	private WebElement searchBtn;
 
-	@FindBy(className = "searchSummary")
+	@FindBy(css = ".resultContainer.allDone #flightForm")
 	private WebElement searchSummaryDetails;
+	
+	private By fromLocationOptions = By.xpath("//*[@id='ui-id-1']//a");
+	
+	private By toLocationOptions = By.xpath("//*[@id='ui-id-2']//a");
+	
+	private ElementHandler elementHandler;
 	
 	// Constructor
 	public FlightBookingPage(WebDriver driver) {
-		PageFactory.initElements(getDriver(), this);
+		PageFactory.initElements(driver, this);
+		elementHandler = new ElementHandler(driver);
 	}
 
 	// Action methods
@@ -70,7 +72,7 @@ public class FlightBookingPage extends TestHandler {
 	public void selectFromLocation(String value) {
 		fromLocationDrpdwn.sendKeys(value);
 		// wait for the auto complete options to appear for the origin
-		elementHandler.waitForListOfElements(By.xpath("//*[@id='ui-id-1']//a"));
+		elementHandler.waitForListOfElements(fromLocationOptions);
 		List<WebElement> originOptions = fromLocationOptionsID.findElements(By.tagName("a"));
 		originOptions.get(0).click();
 	}
@@ -78,7 +80,7 @@ public class FlightBookingPage extends TestHandler {
 	public void selectToLocation(String value) {
 		toLocationDrpdwn.sendKeys(value);
 		// wait for the auto complete options to appear for the origin
-		elementHandler.waitForListOfElements(By.xpath("//*[@id='ui-id-2']//a"));
+		elementHandler.waitForListOfElements(toLocationOptions);
 		List<WebElement> originOptions = toLocationOptionsID.findElements(By.tagName("a"));
 		originOptions.get(0).click();
 	}
@@ -92,6 +94,7 @@ public class FlightBookingPage extends TestHandler {
 	}
 	
 	public boolean isSummaryPresent() {
+		elementHandler.waitForElement(searchSummaryDetails);
 		return elementHandler.isElementPresent(searchSummaryDetails);
 	}
 	

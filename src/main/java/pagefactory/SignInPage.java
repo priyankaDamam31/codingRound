@@ -3,10 +3,11 @@ package pagefactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import utils.ElementHandler;
 
 public class SignInPage {
-
-	WebDriver driver;
 
 	// WebElements
 	@FindBy(linkText = "Your trips")
@@ -23,6 +24,14 @@ public class SignInPage {
 
 	@FindBy(id = "errors1")
 	private WebElement errorText;
+	
+	private ElementHandler elementHandler;
+	
+	// Constructor
+	public SignInPage(WebDriver driver) {
+		PageFactory.initElements(driver, this);
+		elementHandler = new ElementHandler(driver);
+	}
 
 	// methods
 	
@@ -32,6 +41,7 @@ public class SignInPage {
 	
 	public void clickOnSignInBtn() {
 		SignInBtn.click();
+		elementHandler.waitForElement(signInFrame);
 	}
 	
 	public boolean checkSignInFrameExists() {
@@ -43,7 +53,7 @@ public class SignInPage {
 	}
 	
 	public void navigateTosignInFrame() {
-		driver.switchTo().frame(signInFrame);
+		elementHandler.navigateToFrame(signInFrame);
 	}
 	
 	public boolean checkErrorExists() {
